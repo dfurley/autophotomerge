@@ -162,11 +162,14 @@ function saveJPG(data)
     data.name = data.name == undefined ? activeDocument.name : data.name;
     data.quality == undefined && data.quality = 75
 
-    var options = new ExportOptionsSaveForWeb(),
+    var jpgSaveOptions = new JPEGSaveOptions(),
         jpgFile = new File(data.path + '/' + data.name + '.jpg');
-    options.format = SaveDocumentType.JPEG;
-    options.quality = data.quality;
-    activeDocument.exportDocument(jpgFile, ExportType.SAVEFORWEB, options);
+    jpgSaveOptions.formatOptions = FormatOptions.OPTIMIZEDBASELINE;
+    jpgSaveOptions.embedColorProfile = true;
+    jpgSaveOptions.matte = MatteType.NONE;
+    jpgSaveOptions.quality = 12;
+
+    activeDocument.saveAs(jpgFile, jpgSaveOptions, true, Extension.LOWERCASE);
 }
 
 function savePSD(data)
